@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+    name="ProductsService"
+    targetNamespace="http://localhost:8000/products"
+    xmlns:tns="http://localhost:8000/products"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <types>
+    <xsd:schema targetNamespace="http://localhost:8000/products">
+      
+      <xsd:element name="CreateProductRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="name"  type="xsd:string"/>
+            <xsd:element name="about" type="xsd:string"/>
+            <xsd:element name="price" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="CreateProductResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id"    type="xsd:string"/>
+            <xsd:element name="name"  type="xsd:string"/>
+            <xsd:element name="about" type="xsd:string"/>
+            <xsd:element name="price" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    </xsd:schema>
+  </types>
+
+  <message name="CreateProductRequestMessage">
+    <part name="parameters" element="tns:CreateProductRequest"/>
+  </message>
+
+  <message name="CreateProductResponseMessage">
+    <part name="parameters" element="tns:CreateProductResponse"/>
+  </message>
+
+  <portType name="ProductsPortType">
+    <operation name="CreateProduct">
+      <input  message="tns:CreateProductRequestMessage"/>
+      <output message="tns:CreateProductResponseMessage"/>
+    </operation>
+  </portType>
+
+  <binding name="ProductsBinding" type="tns:ProductsPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="CreateProduct">
+      <soap:operation soapAction="http://localhost:8000/products/CreateProduct"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="ProductsService">
+    <port name="ProductsPort" binding="tns:ProductsBinding">
+      <soap:address location="http://localhost:8000/products"/>
+    </port>
+  </service>
+
+</definitions>
