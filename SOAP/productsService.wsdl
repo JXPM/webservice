@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <definitions 
     name="ProductsService"
     targetNamespace="http://localhost:8000/products"

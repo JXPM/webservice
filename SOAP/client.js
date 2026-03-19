@@ -6,7 +6,7 @@ soap.createClient("http://localhost:8000/products?wsdl", {}, function (err, clie
     return;
   }
   // Make a SOAP request
-  client.CreateProduct({ name: "My product" }, function (err, result) {
+  client.CreateProduct({ name: "My product", about: "This is my product", price: 60 }, function (err, result) {
     if (err) {
       console.error(
         "Error making SOAP request:",
