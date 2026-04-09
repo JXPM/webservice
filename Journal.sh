@@ -12,11 +12,16 @@ git push --set-upstream origin main
 #fichier Maj et push
 git status
 git add .
-git commit -m "modification de l'API"
-git push origin api
+git commit -m "Maj"
+git push origin main
 
 #lanch server 
 node server.js
 
 #lanch client
 node client.js
+
+#lanch docker
+docker run --name postgres -p 5432:5432 \
+	-e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -e POSTGRES_DB=mydb \
+	-v ./init.sql:/docker-entrypoint-initdb.d/init.sql -d postgres
