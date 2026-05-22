@@ -18,7 +18,6 @@ const freeToGameBaseUrl = "https://www.freetogame.com/api";
 
 app.use(express.json());
 
-// Schemas
 const ProductSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -109,8 +108,7 @@ function hashPassword(password) {
   return crypto.createHash("sha512").update(password).digest("hex");
 }
 
-// Assemble une clause WHERE à partir de fragments sql conditions reliés par AND.
-// (postgres.js n'expose pas sql.join, on compose des fragments imbriqués.)
+
 function buildWhere(conditions) {
   return conditions.reduce(
     (acc, condition, index) =>
@@ -209,8 +207,6 @@ async function findReviewsByProductId(productId) {
   `;
 }
 
-// Recalcule les ids des reviews et le score moyen du produit à partir
-// des avis existants. Appelé après chaque création/modification/suppression.
 async function recomputeProductReviews(productId) {
   const reviews = await sql`
     SELECT id, score
@@ -300,7 +296,6 @@ async function hydrateOrder(order) {
 app.post("/products", async (req, res) => {
   const result = await CreateProductSchema.safeParse(req.body);
 
-  // If Zod parsed successfully the request body
   if (result.success) {
     const { name, about, price } = result.data;
 
@@ -903,7 +898,6 @@ app.put("/reviews/:id", async (req, res) => {
     RETURNING ${reviewColumns}
   `;
 
-  // Le produit peut avoir changé : recalculer l'ancien et le nouveau.
   await recomputeProductReviews(existing[0].productId);
   if (existing[0].productId !== productId) {
     await recomputeProductReviews(productId);

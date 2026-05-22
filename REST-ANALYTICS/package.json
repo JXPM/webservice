@@ -1,0 +1,17 @@
+{
+  "name": "rest-analytics",
+  "version": "1.0.0",
+  "description": "API REST d'analytics (views, actions, goals) avec MongoDB",
+  "license": "ISC",
+  "author": "JXPM",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^6.12.0",
+    "zod": "^4.3.6"
+  }
+}
