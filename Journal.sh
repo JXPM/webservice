@@ -12,7 +12,7 @@ git push --set-upstream origin main
 #fichier Maj et push
 git status
 git add .
-git commit -m "Maj"
+git commit -m "ajout d'API"
 git push origin main
 
 #lanch server 

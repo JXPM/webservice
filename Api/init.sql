@@ -2,7 +2,9 @@ CREATE TABLE products (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100),
   about VARCHAR(500),
-  price FLOAT
+  price FLOAT,
+  review_ids INTEGER[] NOT NULL DEFAULT '{}',
+  score FLOAT
 );
 
 INSERT INTO products (name, about, price) VALUES
@@ -21,6 +23,16 @@ CREATE TABLE orders (
   product_ids INTEGER[] NOT NULL,
   total FLOAT NOT NULL,
   payment BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  product_id INTEGER NOT NULL REFERENCES products(id),
+  score INTEGER NOT NULL CHECK (score >= 1 AND score <= 5),
+  content TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
